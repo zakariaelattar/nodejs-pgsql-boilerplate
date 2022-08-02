@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  node-app:
+    build: .
+    image: node-app
+    environment:
+      - DB_USERNAME=merfxbgf
+      - DB_PASSWORD=yH7hDW5d2cKOYVW_IiA045Om9HA0hTbL
+      - DB_NAME=merfxbgf
+      - DB_HOST=batyr.db.elephantsql.com
+      - DB_PORT=5432
+      - DB_DIALECT=postgres
+      - DB_POOL_MIN=0
+      - DB_POOL_MAX=5
+      - DB_POOL_IDLE=10000
+      - DB_POOL_IDLE=10000
+      - DB_POOL_ACQUIRE=30000
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgresql
+    volumes:
+      - .:/usr/src/node-app
+    networks:
+      - node-network
+
+  postgres:
+    image: postgres:14.3
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - node-network
+
+volumes:
+  dbdata:
+
+networks:
+  node-network:
+    driver: bridge
